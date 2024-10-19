@@ -1,0 +1,14 @@
+server:
+  port: 9999
+spring:
+  servlet:
+    multipart:
+      max-file-size: 150MB
+      max-request-size: 150MB
+  application:
+    name: SimpleTransfer
+
+simple-transfer:
+  save-folder-path: allFiles
+  static-path-pattern: /files/**
+  auto-open-browser: true
