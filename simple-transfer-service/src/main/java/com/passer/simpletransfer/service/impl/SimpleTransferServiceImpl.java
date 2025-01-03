@@ -55,8 +55,8 @@ public class SimpleTransferServiceImpl implements SimpleTransferService {
     @Override
     public String getQrCode() {
         QrConfig qrConfig = QrConfig.create()
-                // .setImg("static/simpleTransfer/img/logo.png")
-                .setForeColor(Color.red)
+                // .setImg("static/favicon.ico")
+                .setForeColor(new Color(7237845))
                 .setBackColor(new Color(255, 255, 255, 0))
                 .setRatio(8)
                 .setMargin(0);

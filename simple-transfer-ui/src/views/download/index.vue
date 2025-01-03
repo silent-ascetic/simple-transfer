@@ -66,10 +66,10 @@ const deleteFile = (md5) => {
 
     <van-list v-if="!noFile" v-model:loading="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
       <van-row gutter="10" justify="space-between" align="center" v-for="item in list" :key="item.downloadUrl">
-        <van-col span="22">
+        <van-col span="20">
           <van-cell :title="item.name" :value="item.sizeStr" :clickable="true" @click="downloadFile(item)" />
         </van-col>
-        <van-col span="2">
+        <van-col span="4">
           <van-button icon="delete" round size="small" type="danger" @click="deleteFile(item.md5)" />
         </van-col>
       </van-row>

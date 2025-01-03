@@ -8,3 +8,6 @@
 ### VS Code ###
 .vscode/
 
+### Project ###
+logs/
+allFiles/

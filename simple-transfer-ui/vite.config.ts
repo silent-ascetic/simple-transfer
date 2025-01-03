@@ -27,7 +27,7 @@ export default defineConfig(({ mode }) => {
       // svg icon
       createSvgIconsPlugin({
         // 指定图标文件夹
-        iconDirs: [path.resolve(root, "src/icons/svg")],
+        iconDirs: [path.resolve(root, "src/assets/icons/svg")],
         // 指定 symbolId 格式
         symbolId: "icon-[dir]-[name]"
       }),

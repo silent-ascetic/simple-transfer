@@ -8,7 +8,6 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     ChatNavBar: typeof import('./../components/NavBar/chatNavBar.vue')['default']
-    IIcon: typeof import('./../components/IIcon/index.vue')['default']
     NavBar: typeof import('./../components/NavBar/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
