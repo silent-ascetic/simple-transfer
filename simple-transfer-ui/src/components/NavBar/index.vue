@@ -19,7 +19,7 @@ const onClickRight = (event: TouchEvent | MouseEvent) => {
 </script>
 
 <template>
-  <van-nav-bar fixed placeholder :title="`${config.name}V${config.version} - ${config.author}`" left-text="关闭" @click-left="onClickLeft"
+  <van-nav-bar fixed placeholder :title="config.name" left-text="关闭" @click-left="onClickLeft"
     @click-right="onClickRight">
     <template #right>
       <svg-icon class="text-[18px]" :name="useDarkMode() ? 'light' : 'dark'" />
