@@ -1,6 +1,9 @@
 package com.passer.simpletransfer.utils;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.channels.FileChannel;
 
 /**
@@ -10,6 +13,62 @@ import java.nio.channels.FileChannel;
  * @author hj
  */
 public class FileUtils {
+
+    private static final CharSequence[] SPECIAL_SUFFIX = new CharSequence[]{"tar.bz2", "tar.Z", "tar.gz", "tar.xz"};
+
+
+    public static File newFile(String filePath) {
+        return StringUtils.isEmpty(filePath) ? null : new File(filePath);
+    }
+
+    public static File newFile(File parent, String filePath) {
+        return StringUtils.isEmpty(filePath) || parent == null ? null : new File(parent, filePath);
+    }
+
+    public static File newFile(String parentPath, String filePath) {
+        return StringUtils.isEmpty(filePath) || StringUtils.isEmpty(parentPath) ? null : new File(parentPath, filePath);
+    }
+
+    public static File touch(String path) throws IOException {
+        return path == null ? null : touch(newFile(path));
+    }
+
+    public static File touch(File file) throws IOException {
+        if (null == file) {
+            return null;
+        }
+        if (!file.exists()) {
+            mkParentDirs(file);
+        }
+
+        return file.createNewFile() ? file : null;
+
+    }
+
+    public static File touch(File parent, String path) throws IOException {
+        return touch(newFile(parent, path));
+    }
+
+    public static File touch(String parent, String path) throws IOException {
+        return touch(newFile(parent, path));
+    }
+
+    public static File mkParentDirs(File file) throws IOException {
+        if (null == file) {
+            return null;
+        }
+        File parent = getParent(file, 1);
+        return parent.mkdirs() ? parent : null;
+    }
+
+    public static File getParent(File file, int level) throws IOException {
+        if (level >= 1 && null != file) {
+            File parentFile = file.getCanonicalFile().getParentFile();
+            return 1 == level ? parentFile : getParent(parentFile, level - 1);
+        } else {
+            return file;
+        }
+    }
 
     /**
      * 剪切文件
@@ -78,6 +137,34 @@ public class FileUtils {
             }
         }
         return failNum;
+    }
+
+    public static String extName(File file) {
+        if (null == file) {
+            return null;
+        } else {
+            return file.isDirectory() ? null : extName(file.getName());
+        }
+    }
+
+    public static String extName(String fileName) {
+        if (fileName == null) {
+            return null;
+        } else {
+            int index = fileName.lastIndexOf(".");
+            if (index == -1) {
+                return "";
+            } else {
+                int secondToLastIndex = fileName.substring(0, index).lastIndexOf(".");
+                String substr = fileName.substring(secondToLastIndex == -1 ? index : secondToLastIndex + 1);
+                if (StringUtils.containsAny(substr, SPECIAL_SUFFIX)) {
+                    return substr;
+                } else {
+                    String ext = fileName.substring(index + 1);
+                    return StringUtils.containsAny(ext, new Character[]{'\\','/'}) ? "" : ext;
+                }
+            }
+        }
     }
 
 }

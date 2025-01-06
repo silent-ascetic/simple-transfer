@@ -18,7 +18,7 @@ const getQrCode = () => {
   })
 }
 
-const afterRead = (file) => {
+const afterRead = (file: any) => {
   uploadChunkFile(file)
 }
 
@@ -122,7 +122,7 @@ const uploadChunkFile = (uploadFile) => {
 }
 
 
-function mergeFile(uploadFile, totalChunks, toast) {
+function mergeFile(uploadFile: any, totalChunks: number, toast: any) {
   const data = {
     'fileName': uploadFile.file.name,
     'totalChunks': totalChunks

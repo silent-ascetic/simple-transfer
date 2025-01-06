@@ -1,10 +1,11 @@
 package com.passer.simpletransfer.service.impl;
 
-import cn.hutool.extra.qrcode.QrCodeUtil;
-import cn.hutool.extra.qrcode.QrConfig;
+import com.google.zxing.WriterException;
+import com.passer.simpletransfer.config.QrConfig;
 import com.passer.simpletransfer.config.SimpleTransferProperties;
 import com.passer.simpletransfer.service.SimpleTransferService;
 import com.passer.simpletransfer.utils.FileUtils;
+import com.passer.simpletransfer.utils.QrCodeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 
 /**
  * <p>SimpleTransferService 实现类</p>
@@ -60,7 +62,13 @@ public class SimpleTransferServiceImpl implements SimpleTransferService {
                 .setBackColor(new Color(255, 255, 255, 0))
                 .setRatio(8)
                 .setMargin(0);
-        String qrCode = QrCodeUtil.generateAsSvg(simpleTransferProperties.getSimpleTransferUrl(), qrConfig);
+        String qrCode;
+        try {
+            qrCode = QrCodeUtils.generateAsSvg(simpleTransferProperties.getSimpleTransferUrl(), qrConfig);
+        } catch (IOException | WriterException e) {
+            log.error("二维码生成失败", e);
+            throw new RuntimeException("二维码生成失败");
+        }
         return qrCode.replace("style=\"background-color:", "style=\"height: 100%;width: 100%;background-color: ");
     }
 }
